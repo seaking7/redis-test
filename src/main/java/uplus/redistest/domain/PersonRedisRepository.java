@@ -1,4 +1,4 @@
-package uplus.redistest.person;
+package uplus.redistest.domain;
 
 import org.springframework.data.repository.CrudRepository;
 

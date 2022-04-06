@@ -2,8 +2,8 @@ package uplus.redistest.redis;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import uplus.redistest.person.Person;
-import uplus.redistest.person.PersonRedisRepository;
+import uplus.redistest.domain.Person;
+import uplus.redistest.domain.PersonRedisRepository;
 
 import java.util.Optional;
 
