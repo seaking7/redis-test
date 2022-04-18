@@ -23,11 +23,12 @@ public class ApiController {
     @GetMapping("/keys")
     public String keys(){
         Set<byte[]> keys = redisTemplate.keys("*");
-        return "keys";
+
+        return keys.toString();
     }
 
 
-    @GetMapping("/save")
+    @GetMapping("/save1")
     public String save(){
         String randomId = createId();
         LocalDateTime now = LocalDateTime.now();
@@ -46,7 +47,7 @@ public class ApiController {
     }
 
 
-    @GetMapping("/get")
+    @GetMapping("/get2")
     public long get () {
         String id = createId();
         return availablePointRedisRepository.findById(id)
@@ -54,7 +55,7 @@ public class ApiController {
                 .orElse(0L);
     }
 
-    @GetMapping("/get2")
+    @GetMapping("/get3")
     public long get2 () {
         String id = createId();
         return availablePointRedisRepository.findById(id)

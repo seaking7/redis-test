@@ -28,7 +28,7 @@ public class WebConfig implements WebMvcConfigurer {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
         redisStandaloneConfiguration.setHostName(redisHost);
         redisStandaloneConfiguration.setPort(redisPort);
-        redisStandaloneConfiguration.setPassword(redisPwd);
+//        redisStandaloneConfiguration.setPassword(redisPwd);
         return new LettuceConnectionFactory(redisStandaloneConfiguration);
     }
 
