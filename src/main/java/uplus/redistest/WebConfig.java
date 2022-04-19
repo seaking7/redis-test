@@ -4,7 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisClusterConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisSentinelConfiguration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -22,15 +24,43 @@ public class WebConfig implements WebMvcConfigurer {
     @Value("${spring.redis.password}")
     private String redisPwd;
 
+
+
+//    @Bean
+//    public RedisConnectionFactory redisConnectionFactory(){
+//        log.info("redis Server info {}, {}", redisHost, redisPort);
+//        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+//        redisStandaloneConfiguration.setHostName(redisHost);
+//        redisStandaloneConfiguration.setPort(redisPort);
+//        return new LettuceConnectionFactory(redisStandaloneConfiguration);
+//    }
+
+
+    //Sentinel
+//    @Bean
+//    public RedisConnectionFactory redisConnectionFactory(){
+//        log.info("redis Server info {}, {}", redisHost, redisPort);
+//        RedisSentinelConfiguration redisSentinelConfiguration = new RedisSentinelConfiguration()
+//                .master("mymaster")
+//                .sentinel("100.51.6.77", 26379)
+//                .sentinel("100.51.5.35", 26379)
+//                .sentinel("100.51.0.162", 26379);
+//
+//        return new LettuceConnectionFactory(redisSentinelConfiguration);
+//    }
+
     @Bean
     public RedisConnectionFactory redisConnectionFactory(){
         log.info("redis Server info {}, {}", redisHost, redisPort);
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-        redisStandaloneConfiguration.setHostName(redisHost);
-        redisStandaloneConfiguration.setPort(redisPort);
-//        redisStandaloneConfiguration.setPassword(redisPwd);
-        return new LettuceConnectionFactory(redisStandaloneConfiguration);
+
+        RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration()
+                .clusterNode("100.51.6.77", 3001)
+                .clusterNode("100.51.5.35", 3001)
+                .clusterNode("100.51.0.162", 3001);
+
+        return new LettuceConnectionFactory(redisClusterConfiguration);
     }
+
 
     @Bean
     public RedisTemplate<?, ?> redisTemplate(){
