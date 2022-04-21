@@ -12,6 +12,8 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.List;
+
 @Slf4j
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -24,6 +26,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Value("${spring.redis.password}")
     private String redisPwd;
 
+    @Value("${spring.redis.cluster.nodes}")
+    private List<String> clusterNodes;
 
 
 //    @Bean
@@ -51,12 +55,9 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory(){
-        log.info("redis Server info {}, {}", redisHost, redisPort);
+        log.info("redis Cluster Server info {}", clusterNodes);
 
-        RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration()
-                .clusterNode("100.51.6.77", 3001)
-                .clusterNode("100.51.5.35", 3001)
-                .clusterNode("100.51.0.162", 3001);
+        RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration(clusterNodes);
 
         return new LettuceConnectionFactory(redisClusterConfiguration);
     }
@@ -66,6 +67,7 @@ public class WebConfig implements WebMvcConfigurer {
     public RedisTemplate<?, ?> redisTemplate(){
         RedisTemplate<byte[], byte[]> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory());
+
 //        redisTemplate.setKeySerializer(new StringRedisSerializer());
 //        redisTemplate.setValueSerializer(new StringRedisSerializer());
         return redisTemplate;
