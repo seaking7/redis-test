@@ -17,6 +17,8 @@ import java.util.List;
 @Slf4j
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+
+    /*
     @Value("${spring.redis.host}")
     private String redisHost;
 
@@ -72,4 +74,7 @@ public class WebConfig implements WebMvcConfigurer {
 //        redisTemplate.setValueSerializer(new StringRedisSerializer());
         return redisTemplate;
     }
+
+
+     */
 }
