@@ -7,22 +7,16 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uplus.redistest.domain.AvailablePoint;
-import uplus.redistest.domain.AvailablePointRedisRepository;
-import uplus.redistest.domain.FrequencyAds;
-import uplus.redistest.domain.FrequencyAdsRedisRepository;
+import uplus.redistest.service.FrequencyService;
 
-import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.Optional;
-import java.util.SplittableRandom;
 
 @Slf4j
 @RestController
 @AllArgsConstructor
 public class FrequencyController {
 
-    private final FrequencyAdsRedisRepository frequencyAdsRedisRepository;
+    private final FrequencyService frequencyService;
     private final RedisTemplate redisTemplate;
 
 
@@ -33,8 +27,6 @@ public class FrequencyController {
 
         //when
         valueOperations.set(key, "hello");
-
-
         HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
         key = "adFreq";
 
@@ -47,6 +39,7 @@ public class FrequencyController {
 
     @GetMapping("test2")
     public String test2(){
+
         HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
         String key = "adFreq";
 
@@ -66,42 +59,17 @@ public class FrequencyController {
 
     @GetMapping("/save")
     public String save(){
-        String randomId = createId();
-        String randomAdsNumber = createAdsNumber();
-        LocalDateTime now = LocalDateTime.now();
-
-        FrequencyAds frequencyAds = FrequencyAds.builder()
-                .id(randomId)
-                .adsNumber(randomAdsNumber)
-                .adsViewTime(now)
-                .build();
-
-        log.info(">>>>>>> [save] FrequencyAds={}", frequencyAds);
-
-        frequencyAdsRedisRepository.save(frequencyAds);
+        frequencyService.updateAdsView();
 
         return "save";
     }
 
-
     @GetMapping("/get")
     public String get () {
-        String id = createId();
-        return frequencyAdsRedisRepository.findById(id)
-                .map(FrequencyAds::getAdsNumber)
-                .orElse("NO ONE Selected");
+        frequencyService.checkFrequency();
+        return "ok";
     }
 
-
-    private String createId() {
-        SplittableRandom random = new SplittableRandom();
-        return String.valueOf(random.nextInt(100000, 199999));
-    }
-
-    private String createAdsNumber() {
-        SplittableRandom random = new SplittableRandom();
-        return String.valueOf(random.nextInt(100000, 199999));
-    }
 
 
 }

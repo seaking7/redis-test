@@ -8,23 +8,22 @@ import org.springframework.data.redis.core.RedisHash;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @ToString
 @Getter
 @RedisHash("adFrequency")
 public class FrequencyAds  implements Serializable {
     @Id
-    private String id;
+    private String userId;
+    public List<AdsViewStatus> adsViewStatusList;
 
-    private String adsNumber;
-    private LocalDateTime adsViewTime;
 
     @Builder
-    public FrequencyAds(String id, String adsNumber, LocalDateTime adsViewTime){
-        this.id = id;
-        this.adsNumber = adsNumber;
-        this.adsViewTime = adsViewTime;
-
+    public FrequencyAds(String userId, List<AdsViewStatus> adsViewStatusList){
+        this.userId = userId;
+        this.adsViewStatusList = adsViewStatusList;
     }
 
 

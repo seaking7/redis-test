@@ -1,4 +1,4 @@
-package uplus.redistest.domain;
+package uplus.redistest.test;
 
 import lombok.Getter;
 import org.springframework.data.annotation.Id;

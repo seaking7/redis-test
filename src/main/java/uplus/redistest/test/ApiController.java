@@ -1,12 +1,12 @@
-package uplus.redistest.controller;
+package uplus.redistest.test;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uplus.redistest.domain.AvailablePoint;
-import uplus.redistest.domain.AvailablePointRedisRepository;
+import uplus.redistest.test.AvailablePoint;
+import uplus.redistest.test.AvailablePointRedisRepository;
 
 import java.time.LocalDateTime;
 import java.util.Set;

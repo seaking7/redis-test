@@ -1,4 +1,4 @@
-package uplus.redistest.domain;
+package uplus.redistest.test;
 
 import lombok.Builder;
 import lombok.Getter;
