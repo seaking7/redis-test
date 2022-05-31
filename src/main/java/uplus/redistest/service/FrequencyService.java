@@ -21,40 +21,48 @@ public class FrequencyService {
         String id = createId();
         List<String> canViewList = supplyListOfCanView();
 
-        Optional<FrequencyAds> byId = frequencyAdsRedisRepository.findById(id);
-        if(byId.isPresent()) {
-            List<AdsViewStatus> adsViewStatusList = byId.get().adsViewStatusList;
-//            adsViewStatusList.stream()
-                            
-            adsViewStatusList.forEach(System.out::println);
+        Optional<FrequencyAds> cacheDataById = frequencyAdsRedisRepository.findById(id);
+        if(cacheDataById.isPresent()) {
+            List<AdsViewStatus> adsViewStatusList = cacheDataById.get().adsViewStatusList;
+
+            adsViewStatusList.stream().sorted(Comparator.comparing(AdsViewStatus::getAdsNumber))
+                    .forEach(System.out::println);
         }
-
-
 
     }
 
     public void updateAdsView(){
 
-        String randomId = createId();
+        String viewingUserId = createId();
+        List<String> listOfWatched = supplyListOfWatched();
+        List<AdsViewStatus> beforeAdsViewList = searchAdsViewStatus(viewingUserId);
 
-        String id = createId();
-        Optional<FrequencyAds> byId = frequencyAdsRedisRepository.findById(id);
+        List<AdsViewStatus> afterAdsViewList = new ArrayList<>();
+        afterAdsViewList = beforeAdsViewList;
+        for( String watchedAdsNo : listOfWatched){
+            boolean isFound = false;
 
-        AdsViewStatus adsViewStatus = new AdsViewStatus();
-        adsViewStatus.adsNumber = createAdsNumber();
-        adsViewStatus.adsFrequencyTime = LocalDateTime.now().plusDays(7);
-        adsViewStatus.viewCount = 1;
+            for(int i = 0; i < beforeAdsViewList.size(); i++){
+                AdsViewStatus adsViewStatus = beforeAdsViewList.get(i);
+                if(adsViewStatus.adsNumber.equals(watchedAdsNo)){
+                    adsViewStatus.viewCount++;
+                    afterAdsViewList.set(i, adsViewStatus);
+                    log.info("existed ads {} {} {}", adsViewStatus.adsNumber, adsViewStatus.viewCount, adsViewStatus.adsFrequencyTime);
+                    isFound = true;
+                    break;
+                }
+            }
 
-        AdsViewStatus adsViewStatus2 = new AdsViewStatus();
-        adsViewStatus2.adsNumber = createAdsNumber();
-        adsViewStatus2.adsFrequencyTime = LocalDateTime.now().plusDays(30);
-        adsViewStatus2.viewCount = 1;
+            if(!isFound){
+                afterAdsViewList.add(makeNewAdsStatus(watchedAdsNo));
+            }
+        }
 
+        System.out.println(afterAdsViewList);
 
-        List<AdsViewStatus> adsViewStatusList = Arrays.asList(adsViewStatus, adsViewStatus2);
         FrequencyAds frequencyAds = FrequencyAds.builder()
-                .userId(randomId)
-                .adsViewStatusList(adsViewStatusList)
+                .userId(viewingUserId)
+                .adsViewStatusList(afterAdsViewList)
                 .build();
 
         log.info(">>>>>>> [save] FrequencyAds={}", frequencyAds);
@@ -62,9 +70,35 @@ public class FrequencyService {
         frequencyAdsRedisRepository.save(frequencyAds);
     }
 
+    private List<AdsViewStatus> searchAdsViewStatus(String id) {
+        Optional<FrequencyAds> cacheDataById = frequencyAdsRedisRepository.findById(id);
+        List<AdsViewStatus> beforeAdsViewList = new ArrayList<>();
+        if(cacheDataById.isPresent()){
+            beforeAdsViewList = cacheDataById.get().getAdsViewStatusList();
+        }
+        return beforeAdsViewList;
+    }
+
+    private AdsViewStatus makeNewAdsStatus(String watchedAdsNo) {
+        AdsViewStatus adsViewStatus = new AdsViewStatus();
+        adsViewStatus.adsNumber = watchedAdsNo;
+        adsViewStatus.adsFrequencyTime = LocalDateTime.now().plusDays(7);
+        adsViewStatus.viewCount = 1;
+        log.info("new ads {} {} {}", adsViewStatus.adsNumber, adsViewStatus.viewCount, adsViewStatus.adsFrequencyTime);
+        return adsViewStatus;
+    }
+
     private List<String> supplyListOfCanView(){
         List<String> result = new ArrayList<String>();
         for(int i=0; i < 10; i++){
+            result.add(createAdsNumber());
+        }
+        return result;
+    }
+
+    private List<String> supplyListOfWatched(){
+        List<String> result = new ArrayList<String>();
+        for(int i=0; i < 5; i++){
             result.add(createAdsNumber());
         }
         return result;

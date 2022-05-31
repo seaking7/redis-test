@@ -8,6 +8,10 @@ public class AdsViewStatus {
     public LocalDateTime adsFrequencyTime;
     public int viewCount;
 
+    public String getAdsNumber() {
+        return adsNumber;
+    }
+
     @Override
     public String toString() {
         return "AdsViewStatus{" +
