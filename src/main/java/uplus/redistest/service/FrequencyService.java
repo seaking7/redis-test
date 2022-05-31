@@ -20,26 +20,44 @@ public class FrequencyService {
     public void checkFrequency(){
         String id = createId();
         List<String> canViewList = supplyListOfCanView();
+        log.info("canViewList : {}", canViewList);
 
         Optional<FrequencyAds> cacheDataById = frequencyAdsRedisRepository.findById(id);
+        List<AdsViewStatus> adsViewStatusList = new ArrayList<>();
         if(cacheDataById.isPresent()) {
-            List<AdsViewStatus> adsViewStatusList = cacheDataById.get().adsViewStatusList;
-
-            adsViewStatusList.stream().sorted(Comparator.comparing(AdsViewStatus::getAdsNumber))
-                    .forEach(System.out::println);
+            adsViewStatusList = cacheDataById.get().adsViewStatusList;
+//            adsViewStatusList.stream().sorted(Comparator.comparing(AdsViewStatus::getAdsNumber))
+//                    .forEach(System.out::println);
         }
+
+        List<String> listFinalList = new ArrayList<>();
+        for(String checkAdsNo : canViewList){
+            boolean isFound = false;
+            for(int i = 0; i < adsViewStatusList.size(); i++){
+                AdsViewStatus adsViewStatus = adsViewStatusList.get(i);
+                if(adsViewStatus.adsNumber.equals(checkAdsNo) && adsViewStatus.viewCount >= 3){
+                    isFound = true;
+                    log.info("can't ads {} {} {}", adsViewStatus.adsNumber, adsViewStatus.viewCount, adsViewStatus.adsFrequencyTime);
+                    break;
+                }
+            }
+            if(!isFound){
+                listFinalList.add(checkAdsNo);
+            }
+        }
+        log.info("FoundList : {}", listFinalList);
+        updateAdsView(listFinalList);
 
     }
 
-    public void updateAdsView(){
+    public void updateAdsView(List<String> watchedList){
 
         String viewingUserId = createId();
-        List<String> listOfWatched = supplyListOfWatched();
         List<AdsViewStatus> beforeAdsViewList = searchAdsViewStatus(viewingUserId);
 
         List<AdsViewStatus> afterAdsViewList = new ArrayList<>();
         afterAdsViewList = beforeAdsViewList;
-        for( String watchedAdsNo : listOfWatched){
+        for( String watchedAdsNo : watchedList){
             boolean isFound = false;
 
             for(int i = 0; i < beforeAdsViewList.size(); i++){
@@ -58,7 +76,9 @@ public class FrequencyService {
             }
         }
 
-        System.out.println(afterAdsViewList);
+        afterAdsViewList.stream().sorted(Comparator.comparing(AdsViewStatus::getAdsNumber))
+                .forEach(System.out::println);
+
 
         FrequencyAds frequencyAds = FrequencyAds.builder()
                 .userId(viewingUserId)

@@ -59,7 +59,7 @@ public class FrequencyController {
 
     @GetMapping("/save")
     public String save(){
-        frequencyService.updateAdsView();
+     //   frequencyService.updateAdsView();
 
         return "save";
     }
