@@ -66,7 +66,7 @@ public class FrequencyController {
 
     @GetMapping("/get")
     public String get () {
-        frequencyService.checkFrequency();
+        frequencyService.supportTest();
         return "ok";
     }
 

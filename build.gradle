@@ -36,3 +36,8 @@ tasks.named('test') {
 test {
 	exclude '**/*'
 }
+
+javadoc {
+	source = sourceSets.main.java.srcDirs
+	options.encoding = 'UTF-8'
+}
