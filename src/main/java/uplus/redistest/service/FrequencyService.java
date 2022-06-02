@@ -25,7 +25,7 @@ public class FrequencyService {
         //찾아진 광고로 Frequency 체크하여 볼 수 있는 광고리스트 만듬
         List<String> listFinalList = cacheChecker.checkAndMakeFinalList(canViewList);
         //광고 집행이후 시청한 광고리스트 캐쉬에 update
-        cacheChecker.reflectFinalResult(listFinalList);
+        cacheChecker.reflectWatchedResult(listFinalList);
     }
 
     private List<String> supplyListOfCanView(){

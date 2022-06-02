@@ -20,15 +20,15 @@ public class CacheChecker {
     public List<String> checkAndMakeFinalList(List<String> canViewList){
         List<AdsViewStatus> adsViewStatusList = searchAdsViewStatus(userId);
 
-        List<String> listFinalList = new ArrayList<>();
+        List<String> finalList = new ArrayList<>();
         for(String checkAdsNo : canViewList){
             boolean isFound = findExcessAds(adsViewStatusList, checkAdsNo);
             if(!isFound){
-                listFinalList.add(checkAdsNo);
+                finalList.add(checkAdsNo);
             }
         }
-        log.info("Final List : {}", listFinalList);
-        return listFinalList;
+        log.info("Final List : {}", finalList);
+        return finalList;
     }
 
     private boolean findExcessAds(List<AdsViewStatus> adsViewStatusList, String checkAdsNo) {
@@ -42,13 +42,12 @@ public class CacheChecker {
         return false;
     }
 
-    public void reflectFinalResult(List<String> watchedList){
-        String viewingUserId = this.userId;
-        List<AdsViewStatus> adsViewStatusList = searchAdsViewStatus(viewingUserId);
+    public void reflectWatchedResult(List<String> watchedList){
+        List<AdsViewStatus> adsViewStatusList = searchAdsViewStatus(userId);
         modifyViewStatusList(watchedList, adsViewStatusList);
 
         printStatusList(adsViewStatusList);
-        saveAdsFrequency(viewingUserId, adsViewStatusList);
+        saveAdsFrequency(userId, adsViewStatusList);
     }
 
     public List<AdsViewStatus> searchAdsViewStatus(String id) {
