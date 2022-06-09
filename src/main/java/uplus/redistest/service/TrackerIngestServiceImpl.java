@@ -61,7 +61,7 @@ public class TrackerIngestServiceImpl implements TrackerIngestService {
 			dbCache.addClickTrackerIntoCache(clickTrackerEntity);
 			
 			//TODO: push to kafa pipeline
-			dataPipeline.send(clickTrackerEntity);
+//			dataPipeline.send(clickTrackerEntity);
 			return true;
 		} else {
 			LOG.info("Delivery Id " + clickPayload.getDeliveryId() + " is missing for given ClickTracker id "
@@ -103,7 +103,7 @@ public class TrackerIngestServiceImpl implements TrackerIngestService {
 			installEntity.setInstallId(installPayload.getInstallId());
 			installEntity.setTime(installPayload.getTime());
 			//TODO: push to kafa pipeline
-			dataPipeline.send(installEntity);
+//			dataPipeline.send(installEntity);
 			return true;
 		}
 		return false;
