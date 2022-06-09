@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import uplus.redistest.models.AdClickTrackerRequest;
-import uplus.redistest.models.AdDeliveryTrackerRequest;
-import uplus.redistest.models.AdInstallTrackerRequest;
+import uplus.redistest.domain.models.AdClickTrackerRequest;
+import uplus.redistest.domain.models.AdDeliveryTrackerRequest;
+import uplus.redistest.domain.models.AdInstallTrackerRequest;
 import uplus.redistest.service.TrackerIngestService;
 
 @RestController

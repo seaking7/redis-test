@@ -9,13 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uplus.redistest.entities.ClickTracker;
-import uplus.redistest.entities.DeliveryTracker;
-import uplus.redistest.entities.InstallTracker;
-import uplus.redistest.models.AdClickTrackerRequest;
-import uplus.redistest.models.AdDeliveryTrackerRequest;
-import uplus.redistest.models.AdInstallTrackerRequest;
-import uplus.redistest.repos.AdDeliveryTrackerRepository;
+import uplus.redistest.domain.entities.ClickTracker;
+import uplus.redistest.domain.entities.DeliveryTracker;
+import uplus.redistest.domain.entities.InstallTracker;
+import uplus.redistest.domain.models.AdClickTrackerRequest;
+import uplus.redistest.domain.models.AdDeliveryTrackerRequest;
+import uplus.redistest.domain.models.AdInstallTrackerRequest;
+import uplus.redistest.service.redis.CacheService;
 
 @Service
 public class TrackerIngestServiceImpl implements TrackerIngestService {
@@ -23,8 +23,8 @@ public class TrackerIngestServiceImpl implements TrackerIngestService {
 
 	@Autowired
 	CacheService dbCache;
-	@Autowired
-	private DataPipeLineService dataPipeline;
+//	@Autowired
+//	private DataPipeLineService dataPipeline;
 	
 	@Override
 	public boolean ingestDeliveryTracker(AdDeliveryTrackerRequest deliveryPayload) {
@@ -34,7 +34,7 @@ public class TrackerIngestServiceImpl implements TrackerIngestService {
 		DeliveryTracker deliveryTrackerEntity = fillDeliveryEnitity(deliveryPayload);
 		dbCache.addDeliveryTrackerIntoCache(deliveryTrackerEntity);
 		//TODO: push to kafa pipeline
-		dataPipeline.send(deliveryTrackerEntity);
+		//dataPipeline.send(deliveryTrackerEntity);
 		return true;
 	}
 	private DeliveryTracker fillDeliveryEnitity(AdDeliveryTrackerRequest deliveryPayload) {
@@ -61,7 +61,7 @@ public class TrackerIngestServiceImpl implements TrackerIngestService {
 			dbCache.addClickTrackerIntoCache(clickTrackerEntity);
 			
 			//TODO: push to kafa pipeline
-			dataPipeline.send(clickTrackerEntity);
+//			dataPipeline.send(clickTrackerEntity);
 			return true;
 		} else {
 			LOG.info("Delivery Id " + clickPayload.getDeliveryId() + " is missing for given ClickTracker id "
@@ -103,7 +103,7 @@ public class TrackerIngestServiceImpl implements TrackerIngestService {
 			installEntity.setInstallId(installPayload.getInstallId());
 			installEntity.setTime(installPayload.getTime());
 			//TODO: push to kafa pipeline
-			dataPipeline.send(installEntity);
+//			dataPipeline.send(installEntity);
 			return true;
 		}
 		return false;

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
-import uplus.redistest.entities.ClickTracker;
+import uplus.redistest.domain.entities.ClickTracker;
 
 import javax.annotation.PostConstruct;
 @Repository

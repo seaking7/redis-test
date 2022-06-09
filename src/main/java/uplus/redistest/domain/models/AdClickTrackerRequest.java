@@ -3,7 +3,7 @@
  * 07-Jul-2018 2:40:10 PM
  * 
  */
-package uplus.redistest.models;
+package uplus.redistest.domain.models;
 
 import java.util.Date;
 

@@ -5,9 +5,9 @@
  */
 package uplus.redistest.service;
 
-import uplus.redistest.models.AdClickTrackerRequest;
-import uplus.redistest.models.AdDeliveryTrackerRequest;
-import uplus.redistest.models.AdInstallTrackerRequest;
+import uplus.redistest.domain.models.AdClickTrackerRequest;
+import uplus.redistest.domain.models.AdDeliveryTrackerRequest;
+import uplus.redistest.domain.models.AdInstallTrackerRequest;
 
 public interface TrackerIngestService {
 	boolean ingestDeliveryTracker(AdDeliveryTrackerRequest deliveryPayload);

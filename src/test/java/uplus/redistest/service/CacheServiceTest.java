@@ -1,15 +1,15 @@
 package uplus.redistest.service;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import uplus.redistest.entities.ClickTracker;
-import uplus.redistest.entities.DeliveryTracker;
+import uplus.redistest.domain.entities.ClickTracker;
+import uplus.redistest.domain.entities.DeliveryTracker;
 import uplus.redistest.repos.AdClickTrackerRepository;
 import uplus.redistest.repos.AdDeliveryTrackerRepository;
+import uplus.redistest.service.redis.CacheService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

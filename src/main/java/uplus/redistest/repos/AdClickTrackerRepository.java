@@ -1,7 +1,7 @@
 package uplus.redistest.repos;
 
 
-import uplus.redistest.entities.ClickTracker;
+import uplus.redistest.domain.entities.ClickTracker;
 
 public interface AdClickTrackerRepository {
 	void save(ClickTracker clickTracker);

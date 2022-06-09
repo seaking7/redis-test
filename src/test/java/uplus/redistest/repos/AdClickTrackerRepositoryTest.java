@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import uplus.redistest.entities.ClickTracker;
+import uplus.redistest.domain.entities.ClickTracker;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

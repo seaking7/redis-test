@@ -1,19 +1,17 @@
 package uplus.redistest.service;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import uplus.redistest.models.AdClickTrackerRequest;
-import uplus.redistest.models.AdDeliveryTrackerRequest;
-import uplus.redistest.models.AdInstallTrackerRequest;
+import uplus.redistest.domain.models.AdClickTrackerRequest;
+import uplus.redistest.domain.models.AdDeliveryTrackerRequest;
+import uplus.redistest.domain.models.AdInstallTrackerRequest;
 import uplus.redistest.repos.AdClickTrackerRepository;
 import uplus.redistest.repos.AdDeliveryTrackerRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class TrackerIngestServiceTest {

@@ -3,7 +3,7 @@
  * 07-Jul-2018 4:41:32 PM
  * 
  */
-package uplus.redistest.entities;
+package uplus.redistest.domain.entities;
 
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 

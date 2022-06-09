@@ -3,10 +3,10 @@
  * 07-Jul-2018 4:51:45 PM
  * 
  */
-package uplus.redistest.service;
+package uplus.redistest.service.redis;
 
-import uplus.redistest.entities.ClickTracker;
-import uplus.redistest.entities.DeliveryTracker;
+import uplus.redistest.domain.entities.ClickTracker;
+import uplus.redistest.domain.entities.DeliveryTracker;
 
 public interface CacheService {
 	void addDeliveryTrackerIntoCache(DeliveryTracker deliveryTracker);

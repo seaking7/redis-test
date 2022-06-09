@@ -1,5 +1,5 @@
 
-package uplus.redistest.service;
+package uplus.redistest.service.kafka;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,13 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.Acknowledgment;
-import org.springframework.stereotype.Service;
 
-import uplus.redistest.entities.ClickTracker;
-import uplus.redistest.entities.DeliveryTracker;
-import uplus.redistest.entities.InstallTracker;
+import uplus.redistest.domain.entities.ClickTracker;
+import uplus.redistest.domain.entities.DeliveryTracker;
+import uplus.redistest.domain.entities.InstallTracker;
 
-@Service
+//@Service
 public class KafkaDataPipeLineService implements DataPipeLineService {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 	private final static String DELIVERY_TOPIC = "delivery";

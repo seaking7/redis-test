@@ -3,11 +3,11 @@
  * 08-Jul-2018 4:00:08 PM
  * 
  */
-package uplus.redistest.service;
+package uplus.redistest.service.kafka;
 
-import uplus.redistest.entities.ClickTracker;
-import uplus.redistest.entities.DeliveryTracker;
-import uplus.redistest.entities.InstallTracker;
+import uplus.redistest.domain.entities.ClickTracker;
+import uplus.redistest.domain.entities.DeliveryTracker;
+import uplus.redistest.domain.entities.InstallTracker;
 
 public interface DataPipeLineService {
 	void send(DeliveryTracker tracker);

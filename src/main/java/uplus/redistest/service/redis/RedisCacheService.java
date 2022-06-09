@@ -3,12 +3,12 @@
  * 07-Jul-2018 4:58:07 PM
  * 
  */
-package uplus.redistest.service;
+package uplus.redistest.service.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uplus.redistest.entities.ClickTracker;
-import uplus.redistest.entities.DeliveryTracker;
+import uplus.redistest.domain.entities.ClickTracker;
+import uplus.redistest.domain.entities.DeliveryTracker;
 import uplus.redistest.repos.AdClickTrackerRepository;
 import uplus.redistest.repos.AdDeliveryTrackerRepository;
 
