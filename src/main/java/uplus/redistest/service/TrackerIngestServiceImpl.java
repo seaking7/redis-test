@@ -20,11 +20,11 @@ import uplus.redistest.repos.AdDeliveryTrackerRepository;
 @Service
 public class TrackerIngestServiceImpl implements TrackerIngestService {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
-	@Autowired
-	AdDeliveryTrackerRepository deliveryTrackerRepo;
-	
+
 	@Autowired
 	CacheService dbCache;
+	@Autowired
+	private DataPipeLineService dataPipeline;
 	
 	@Override
 	public boolean ingestDeliveryTracker(AdDeliveryTrackerRequest deliveryPayload) {
@@ -34,6 +34,7 @@ public class TrackerIngestServiceImpl implements TrackerIngestService {
 		DeliveryTracker deliveryTrackerEntity = fillDeliveryEnitity(deliveryPayload);
 		dbCache.addDeliveryTrackerIntoCache(deliveryTrackerEntity);
 		//TODO: push to kafa pipeline
+		dataPipeline.send(deliveryTrackerEntity);
 		return true;
 	}
 	private DeliveryTracker fillDeliveryEnitity(AdDeliveryTrackerRequest deliveryPayload) {
@@ -60,6 +61,7 @@ public class TrackerIngestServiceImpl implements TrackerIngestService {
 			dbCache.addClickTrackerIntoCache(clickTrackerEntity);
 			
 			//TODO: push to kafa pipeline
+			dataPipeline.send(clickTrackerEntity);
 			return true;
 		} else {
 			LOG.info("Delivery Id " + clickPayload.getDeliveryId() + " is missing for given ClickTracker id "
@@ -101,6 +103,7 @@ public class TrackerIngestServiceImpl implements TrackerIngestService {
 			installEntity.setInstallId(installPayload.getInstallId());
 			installEntity.setTime(installPayload.getTime());
 			//TODO: push to kafa pipeline
+			dataPipeline.send(installEntity);
 			return true;
 		}
 		return false;
