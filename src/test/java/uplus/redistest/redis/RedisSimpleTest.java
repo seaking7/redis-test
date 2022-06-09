@@ -1,6 +1,7 @@
 package uplus.redistest.redis;
 
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +20,11 @@ public class RedisSimpleTest {
 
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
+
+    @AfterEach
+    public void tearDown() {
+
+    }
 
     @Test
     void testString(){
@@ -52,6 +58,8 @@ public class RedisSimpleTest {
 
         List<String> resultRange = listOperations.range(key, 0, 9);
         System.out.println(Arrays.toString(resultRange.toArray()));
+
+        //listOperations.remove(key, 10,  )
     }
 
 
