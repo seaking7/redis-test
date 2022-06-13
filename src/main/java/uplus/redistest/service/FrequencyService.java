@@ -3,8 +3,8 @@ package uplus.redistest.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uplus.redistest.domain.CacheChecker;
-import uplus.redistest.domain.FrequencyAdsRedisRepository;
+import uplus.redistest.service.redis.CacheChecker;
+import uplus.redistest.repos.FrequencyAdsRedisRepository;
 
 import java.util.*;
 

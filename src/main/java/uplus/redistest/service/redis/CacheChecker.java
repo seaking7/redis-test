@@ -1,6 +1,9 @@
-package uplus.redistest.domain;
+package uplus.redistest.service.redis;
 
 import lombok.extern.slf4j.Slf4j;
+import uplus.redistest.domain.AdsViewStatus;
+import uplus.redistest.domain.FrequencyAds;
+import uplus.redistest.repos.FrequencyAdsRedisRepository;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -16,7 +19,7 @@ public class CacheChecker {
         this.frequencyAdsRedisRepository = frequencyAdsRedisRepository;
     }
 
-
+    //찾아진 광고로 Frequency 체크하여 볼 수 있는 광고리스트 만듬
     public List<String> checkAndMakeFinalList(List<String> canViewList){
         List<AdsViewStatus> adsViewStatusList = searchAdsViewStatus(userId);
 
